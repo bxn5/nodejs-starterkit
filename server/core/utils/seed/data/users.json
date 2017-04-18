@@ -1,0 +1,11 @@
+[
+   {
+    "email" : "admin@admin",
+    "password" : "admin",
+    "profile" : {
+      "name" : "Admin",
+      "lastName" : "Admin",
+      "role" : "USER"
+    }
+	}
+]

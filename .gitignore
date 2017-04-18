@@ -1,0 +1,7 @@
+node_modules
+logs
+forever
+.idea/
+public
+tmp
+npm-debug.log
