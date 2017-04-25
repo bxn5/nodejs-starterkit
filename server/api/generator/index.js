@@ -4,7 +4,7 @@ const fs = require('fs');
 
 class genController {
   index (req, res, next) {
-    generator.generate('User');
+    generator.generate('Post');
     let status = vars.api.status.ok;
     res.json({status});
   }

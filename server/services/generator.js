@@ -3,14 +3,12 @@ const fs = require('fs');
 class Generator {
 	
   controllerTemplate (model) {
-  		return `
-/*global
+  		return `/*global
  expect, request, vars, port
  */
 
 // module dependencies
 const ${model}    = require(\`\${__models}/${model}\`\);
-
 
 /**
  * ${model} controller
@@ -25,16 +23,13 @@ class ${model}Controller {
    * @send {Object} response with ${model} object
    */
   add(req, res, next) {
+    let _${model.toLowerCase()} = new ${model}(req.body);
 
-    let _${model} = new ${model}(req.body);
-
-    _${model}
+    _${model.toLowerCase()}
       .save()
-      .then(${model} => {
-
+      .then(${model.toLowerCase()} => {
         let status = vars.api.status.ok;
-        res.json({status, ${model}});
-
+        res.json({status, ${model.toLowerCase()}});
       })
       .then(null, error => {
         next(error);
@@ -42,7 +37,7 @@ class ${model}Controller {
   }
 
   /**
-   * get all ${model}
+   * get all ${model.toLowerCase()}
    * @param req {Object} request
    * @param res {Object} response
    * @param next {Function} next
@@ -52,9 +47,9 @@ class ${model}Controller {
 
     ${model}
       .find()
-      .then(dataList => {
+      .then(${model.toLowerCase()}List => {
         let status = vars.api.status.ok;
-        res.json({status, dataList});
+        res.json({status, ${model.toLowerCase()}List});
 
       })
       .then(null, error => {
@@ -67,20 +62,20 @@ class ${model}Controller {
    * @param req {Object} request
    * @param res {Object} response
    * @param next {Function} next
-   * @send {Object} response with renamed ${model}
+   * @send {Object} response with ${model.toLowerCase()}
    */
   update(req, res, next) {
 
     ${model}
       .findOneAndUpdate(req.params, req.body, { new: true })
-      .then(data => {
-
-        if (data === null) {
+      .then(${model.toLowerCase()} => {
+        if (!${model.toLowerCase()}) {
           let error = new ApiError(404);
           return Promise.reject(error);
         }
+
         let status = vars.api.status.ok;
-        res.json({status, data});
+        res.json({status, ${model.toLowerCase()}});
       })
       .then(null, error => {
         next(error);
@@ -89,24 +84,24 @@ class ${model}Controller {
   }
 
   /**
-   * Get one ${model}
+   * Get ${model.toLowerCase()} by id
    * @param req {Object} request
    * @param res {Object} response
    * @param next {Function} next
-   * @send {Object} response with ${model}
+   * @send {Object} response with ${model.toLowerCase()}
    */
   one(req, res, next) {
 
     ${model}
       .findOne(req.params)
-      .then(data => {
-        if (!data){
+      .then(${model.toLowerCase()} => {
+        if (!${model.toLowerCase()}){
           let error = new ApiError(404);
           return Promise.reject(error);
         }
-        let status = vars.api.status.ok;
-        res.json({status, data});
 
+        let status = vars.api.status.ok;
+        res.json({status, ${model.toLowerCase()}});
       })
       .then(null, error => {
         next(error);
@@ -118,31 +113,29 @@ class ${model}Controller {
    * @param req {Object} request
    * @param res {Object} response
    * @param next {Function} next
-   * @send {Object} response with deleted ${model} object
+   * @send {Object} response with deleted ${model.toLowerCase()} object
    */
   delete(req, res, next) {
-
+    
     ${model}
       .findByIdAndRemove(req.params.id)
-      .then(data => {
-        if (data === null) {
+      .then(${model.toLowerCase()} => {
+        if (!${model.toLowerCase()}) {
           let error = new ApiError(404);
           return Promise.reject(error);
         }
-        let status = vars.api.status.ok;
-        res.json({status, data});
 
+        let status = vars.api.status.ok;
+        res.json({status, ${model.toLowerCase()}});
       })
       .then(null, error => {
         next(error);
       });
-
   }
-
 }
 
-module.exports = new ${model}Controller();
- `
+module.exports = new ${model}Controller();`;
+  		
   	}
 
   configTemplate(model) {
