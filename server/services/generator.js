@@ -193,7 +193,10 @@ module.exports = {
   	}
 
   generate (modelName) {
-  	let dir = __services + '/generates/' + modelName;
+  	if (!fs.existsSync(__services + '/generated/')){
+    	fs.mkdirSync(__services + '/generated/');
+	}
+  	let dir = __services + '/generated/' + modelName;
     dir = dir.toLowerCase();
 	  if (!fs.existsSync(dir)){
     	fs.mkdirSync(dir);
