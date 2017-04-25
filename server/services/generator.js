@@ -155,10 +155,10 @@ module.exports = new ${model}Controller();
  */
 module.exports = {
   add: {
-		path: '/',
-		method: 'post',
+    path: '/',
+    method: 'post',
     access: [
-      'USER'
+      'ADMIN'
     ]
 	},
 
@@ -168,10 +168,10 @@ module.exports = {
   },
 
   update: {
-	  path: '/:_id',
+    path: '/:_id',
     method: 'put',
     access: [
-      'USER'
+      'ADMIN'
     ]
   },
 
@@ -184,7 +184,7 @@ module.exports = {
     path: '/:id',
     method: 'delete',
     access: [
-      'USER'
+      'ADMIN'
     ]
   }
 
@@ -196,7 +196,7 @@ module.exports = {
     if (!fs.existsSync(__services + '/generated/')){
       fs.mkdirSync(__services + '/generated/');
     }
-    let dir = __services + '/generated/' + modelName;
+    let dir = __services + '/generated/' + modelName + 'admin';
     dir = dir.toLowerCase();
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
