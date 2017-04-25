@@ -2,7 +2,7 @@ const fs = require('fs');
 
 class Generator {
 	
-  	controllerTemplate (model) {
+  controllerTemplate (model) {
   		return `
 /*global
  expect, request, vars, port
@@ -145,7 +145,7 @@ module.exports = new ${model}Controller();
  `
   	}
 
-  	configTemplate(model) {
+  configTemplate(model) {
   		return `
 
 
@@ -154,7 +154,7 @@ module.exports = new ${model}Controller();
  * @type {Object}
  */
 module.exports = {
-	add: {
+  add: {
 		path: '/',
 		method: 'post',
     access: [
@@ -193,22 +193,22 @@ module.exports = {
   	}
 
   generate (modelName) {
-  	if (!fs.existsSync(__services + '/generated/')){
-    	fs.mkdirSync(__services + '/generated/');
-	}
-  	let dir = __services + '/generated/' + modelName;
+    if (!fs.existsSync(__services + '/generated/')){
+      fs.mkdirSync(__services + '/generated/');
+    }
+    let dir = __services + '/generated/' + modelName;
     dir = dir.toLowerCase();
-	  if (!fs.existsSync(dir)){
-    	fs.mkdirSync(dir);
-	  }
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
     fs.writeFile(dir + '/index.js', this.controllerTemplate(modelName), (err) => {
       if (err) throw err;
         console.log('The file has been saved!');
       });
     fs.writeFile(dir + '/config.js', this.configTemplate(modelName), (err) => {
-	    if (err) throw err;
-	    console.log('The file has been saved!');
-	  });
+      if (err) throw err;
+        console.log('The file has been saved!');
+    });
   }
 }
 
