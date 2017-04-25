@@ -5,3 +5,4 @@ forever
 public
 tmp
 npm-debug.log
+server/services/generates/*
